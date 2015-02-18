@@ -4,9 +4,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -106,8 +104,9 @@ public class Main {
 	 * @param outputFile Name of the csv file.
 	 * @throws FileNotFoundException
 	 */
-	private static void writeCsvFile(ArrayList<String[]> csvInfo, String outputFile) throws FileNotFoundException {
-		PrintWriter writer = new PrintWriter(outputFile);
+	private static void writeCsvFile(ArrayList<String[]> csvInfo, String outputFile) throws IOException {
+		FileWriter fileWriter = new FileWriter(outputFile);
+		BufferedWriter writer = new BufferedWriter(fileWriter);
 		for (String[] current : csvInfo) {
 			StringBuilder builder = new StringBuilder();
 			for ( String token : current ){
@@ -115,10 +114,13 @@ public class Main {
 				builder.append(",");
 			}
 			builder.setLength(builder.length());
-			writer.println(builder.toString());
+			builder.append("\n");
+			writer.write(builder.toString());
 		}
 		writer.flush();
+		fileWriter.flush();
 		writer.close();
+		fileWriter.close();
 	}
 
 	/**
