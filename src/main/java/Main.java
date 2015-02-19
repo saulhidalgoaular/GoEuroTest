@@ -113,7 +113,7 @@ public class Main {
 				builder.append(token);
 				builder.append(",");
 			}
-			builder.setLength(builder.length());
+			builder.setLength(builder.length() - 1);
 			builder.append("\n");
 			writer.write(builder.toString());
 		}
